@@ -1,4 +1,4 @@
-package com.rncosmossample;
+package com.rn060cosmosdbsample;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "rnCosmosSample";
+        return "rn060CosmosdbSample";
     }
 }

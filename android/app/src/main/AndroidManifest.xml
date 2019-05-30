@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.rncosmossample">
+  package="com.rn060cosmosdbsample">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
