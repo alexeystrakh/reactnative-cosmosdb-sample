@@ -26,7 +26,20 @@ import {
 
 import * as Cosmos from '@azure/cosmos';
 
+const cosmosHost = '<your_cosmosdb_instance>.documents.azure.com:443>';
+const primaryKey = '<your_master_key>';
+const database = 'Tasks';
+const collection = 'Items';
+
 const App = () => {
+  const CosmosClient = Cosmos.CosmosClient;
+  const client = new CosmosClient({ endpoint: this.cosmosHost, auth: { masterKey: this.primaryKey } });
+  console.warn(`client: ${client}`);
+
+  // tab1.page.ts:25 TypeError: os.platform is not a function
+  // const db = await client.database(this.database);
+  // console.warn(`database: ${db}`);
+
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
