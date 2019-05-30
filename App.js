@@ -24,6 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import * as Cosmos from '@azure/cosmos';
+
 const App = () => {
   return (
     <Fragment>
