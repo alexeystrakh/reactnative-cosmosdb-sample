@@ -25,20 +25,10 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import * as Cosmos from '@azure/cosmos';
-
-const cosmosHost = '<your_cosmosdb_instance>.documents.azure.com:443>';
-const primaryKey = '<your_master_key>';
-const database = 'Tasks';
-const collection = 'Items';
+import * as Model from './todoItem';
 
 const App = () => {
-  const CosmosClient = Cosmos.CosmosClient;
-  const client = new CosmosClient({ endpoint: this.cosmosHost, auth: { masterKey: this.primaryKey } });
-  console.warn(`client: ${client}`);
-
-  // tab1.page.ts:25 TypeError: os.platform is not a function
-  // const db = await client.database(this.database);
-  // console.warn(`database: ${db}`);
+  loadItemsViaCosmosSDK();
 
   return (
     <Fragment>
@@ -81,6 +71,30 @@ const App = () => {
     </Fragment>
   );
 };
+
+async function loadItemsViaCosmosSDK() {
+  const cosmosHost = '<your_cosmosdb_instance>.documents.azure.com:443>';
+  const primaryKey = '<your_master_key>';
+  const database = 'Tasks';
+  const collection = 'Items';
+  const client = new Cosmos.CosmosClient({
+    endpoint: `https://${cosmosHost}`,
+    auth: { masterKey: primaryKey },
+    consistencyLevel: 'Eventual',
+    connectionPolicy: {
+      enableEndpointDiscovery: false
+    }
+  });
+
+  const db = await client.database(database);
+  const container = db.container(collection);
+  // const response = await container.items.readAll<Model.Todo>().fetchAll();
+  const response = await container.items.readAll().fetchAll();
+  console.warn(response);
+
+  //this.items = response.resources;
+  console.log('items received!');
+}
 
 const styles = StyleSheet.create({
   scrollView: {
