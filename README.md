@@ -22,7 +22,8 @@ npm install -g react-native-cli
 ### Run the sample
 
 ```Bash
-npm install
-react-native run-ios
-react-native run-android
+1. Set yout CosmosDB host and master key at the `items-view.js`
+2. npm install
+3. react-native run-ios
+4. react-native run-android
 ```

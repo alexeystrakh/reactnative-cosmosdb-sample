@@ -24,12 +24,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import * as Cosmos from '@azure/cosmos';
-import * as Model from './todoItem';
+import ItemsView from './items-view';
 
 const App = () => {
-  loadItemsViaCosmosSDK();
-
   return (
     <Fragment>
       <StatusBar barStyle="dark-content" />
@@ -39,6 +36,7 @@ const App = () => {
           style={styles.scrollView}>
           <Header />
           <View style={styles.body}>
+            <ItemsView />
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One!</Text>
               <Text style={styles.sectionDescription}>
@@ -71,30 +69,6 @@ const App = () => {
     </Fragment>
   );
 };
-
-async function loadItemsViaCosmosSDK() {
-  const cosmosHost = '<your_cosmosdb_instance>.documents.azure.com:443>';
-  const primaryKey = '<your_master_key>';
-  const database = 'Tasks';
-  const collection = 'Items';
-  const client = new Cosmos.CosmosClient({
-    endpoint: `https://${cosmosHost}`,
-    auth: { masterKey: primaryKey },
-    consistencyLevel: 'Eventual',
-    connectionPolicy: {
-      enableEndpointDiscovery: false
-    }
-  });
-
-  const db = await client.database(database);
-  const container = db.container(collection);
-  // const response = await container.items.readAll<Model.Todo>().fetchAll();
-  const response = await container.items.readAll().fetchAll();
-  console.warn(response);
-
-  //this.items = response.resources;
-  console.log('items received!');
-}
 
 const styles = StyleSheet.create({
   scrollView: {
